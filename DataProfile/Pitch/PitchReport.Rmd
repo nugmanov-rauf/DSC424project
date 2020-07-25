@@ -1,0 +1,21 @@
+---
+title: "PitchReport"
+author: "Rauf"
+date: "7/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r data}
+data <- read.csv("PitchDataset.csv")
+```
+
+```{r expl, eval=FALSE}
+library(DataExplorer)
+summary(data)
+create_report(data,output_file = "pitch_data.html")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
