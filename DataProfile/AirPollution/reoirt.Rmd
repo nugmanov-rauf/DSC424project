@@ -1,0 +1,20 @@
+---
+title: "AirPollution"
+author: "Rauf"
+date: "7/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r data}
+library(readxl)
+air_data <- read_excel("C:/Users/Rauf Nugmanov/Downloads/DePaul/5.Summer2020/DSC424/ProjectData_DSC423.xlsx")
+```
+
+```{r expl, eval=FALSE}
+library(DataExplorer)
+summary(air_data)
+create_report(air_data,output_file = "air_data.html")
+```
