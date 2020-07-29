@@ -1,0 +1,21 @@
+---
+title: "CollegeData"
+author: "Rauf"
+date: "7/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r data}
+#https://vincentarelbundock.github.io/Rdatasets/csv/ISLR/College.csv
+#https://vincentarelbundock.github.io/Rdatasets/doc/ISLR/College.html
+data <- read.csv("College.csv")
+```
+
+```{r expl, eval=FALSE}
+library(DataExplorer)
+summary(data)
+create_report(data,output_file = "College.html")
+```

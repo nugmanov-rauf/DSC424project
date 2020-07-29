@@ -1,0 +1,19 @@
+---
+title: "CPSdata"
+author: "Rauf"
+date: "7/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r data}
+data <- read.csv("Project 423_Dataset_chicago-public-schools-elementary-school-progress-report-2013-2014.csv")
+```
+
+```{r expl, eval=FALSE}
+library(DataExplorer)
+summary(data)
+create_report(data,output_file = "CPS.html")
+```
