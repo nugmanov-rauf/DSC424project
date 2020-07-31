@@ -1,0 +1,26 @@
+---
+title: "cps1"
+author: "Rauf"
+date: "7/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r data}
+library(readxl)
+Chicago_Public_Schools_Progress_Report_Cards_2011_2012 <- read_excel("Chicago_Public_Schools_-_Progress_Report_Cards__2011-2012.xlsx", 
+    sheet = "Refined_DataSet")
+#View(Chicago_Public_Schools_Progress_Report_Cards_2011_2012)
+```
+
+```{r expl, eval=FALSE}
+library(DataExplorer)
+#summary(Chicago_Public_Schools_Progress_Report_Cards_2011_2012)
+create_report(Chicago_Public_Schools_Progress_Report_Cards_2011_2012,output_file = "CPSRef.html")
+```
