@@ -19,6 +19,8 @@ library(mice)
 #Set Working Directory
 setwd('E:/DPU/Summer I/Advance Data Analysis/project')
 #Read in responsess
+#library("readxl")
+#my_data <- read_excel("CPS_.xlsx")
 
 responses <- read.csv(file="CPS_.csv", header=TRUE, sep=",",na.strings = "NDA") 
 
@@ -422,3 +424,52 @@ scores_3 <- scores[,3]
 summary(scores_3)
 
 
+#########################################################################################
+resp <- read.csv(file="CPS_.csv", header=TRUE, sep=",",na.strings = "NDA")
+dim(resp)
+head(resp)
+#1-5
+resp$`Safety.Score`[which(is.na(resp$`Safety.Score`))] = mean(resp$`Safety.Score`,na.rm = TRUE)
+resp$`Family.Involvement.Score`[which(is.na(resp$`Family.Involvement.Score`))] = mean(resp$`Family.Involvement.Score`,na.rm = TRUE)
+resp$`Environment.Score`[which(is.na(resp$`Environment.Score`))] = mean(resp$`Environment.Score`,na.rm = TRUE)
+resp$`Instruction.Score`[which(is.na(resp$`Instruction.Score`))] = mean(resp$`Instruction.Score`,na.rm = TRUE)
+resp$`Leaders.Score`[which(is.na(resp$`Leaders.Score`))] = mean(resp$`Leaders.Score`,na.rm = TRUE)
+#6-10
+resp$`Teachers.Score`[which(is.na(resp$`Teachers.Score`))] = mean(resp$`Teachers.Score`,na.rm = TRUE)
+resp$`Parent.Engagement.Score`[which(is.na(resp$`Parent.Engagement.Score`))] = mean(resp$`Parent.Engagement.Score`,na.rm = TRUE)
+resp$`Parent.Environment.Score`[which(is.na(resp$`Parent.Environment.Score`))] = mean(resp$`Parent.Environment.Score`,na.rm = TRUE)
+resp$`Average.Student.Attendance`[which(is.na(resp$`Average.Student.Attendance`))] = mean(resp$`Average.Student.Attendance`,na.rm = TRUE)
+resp$`Average.Teacher.Attendance`[which(is.na(resp$`Average.Teacher.Attendance`))] = mean(resp$`Average.Teacher.Attendance`,na.rm = TRUE)
+#11-14
+resp$`Individualized.Education.Program.Compliance.Rate`[which(is.na(resp$`Individualized.Education.Program.Compliance.Rate`))] = mean(resp$`Individualized.Education.Program.Compliance.Rate`,na.rm = TRUE)
+resp$Pk.2.Literacy..[which(is.na(resp$Pk.2.Literacy..))] = mean(resp$Pk.2.Literacy..,na.rm = TRUE)
+resp$Pk.2.Math..[which(is.na(resp$Pk.2.Math..))] = mean(resp$Pk.2.Math..,na.rm = TRUE)
+resp$College.Enrollment.Rate..[which(is.na(resp$College.Enrollment.Rate..))] = mean(resp$College.Enrollment.Rate..,na.rm = TRUE)
+
+resp_ES <- resp[resp[3]=='ES',]
+resp_ES_select <-resp[c(7, 8, 10, 12, 14, 16, 18, 20:26, 53)]
+sum(is.na(resp_ES_select))
+resp_ES_select<- scale(resp_ES_select)
+library(corrplot)
+M<-cor(resp_ES_select, method="spearman")
+dim(resp_ES_select)
+corrplot(cor(M,method="spearman"), type = "lower", order = "hclust", tl.cex = 0.65, tl.col = "black", tl.srt = 45)
+library(psych)
+KMO(resp_ES_select)
+library(REdaS)
+bart_spher(resp_ES_select)
+library(psych)
+alpha(resp_ES_select,check.keys=TRUE)
+##factanal
+p = prcomp(resp_ES_select, center=T, scale=T)
+#Check Scree Plot
+plot(p, main="Scree plot")
+abline(1, 0)
+
+#fit = factanal(resp_ES_select, 4,  rotation="varimax")
+#print(fit$loadings, cutoff=.4, sort=T)
+#loadings
+#summary(fit)
+
+fctrs<-fa(resp_ES_select,nfactors = 6, rotate = "varimax", n.obs =400)
+print(fctrs$loadings,cutoff = 0.3)
