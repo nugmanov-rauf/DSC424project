@@ -426,6 +426,7 @@ summary(scores_3)
 
 #########################################################################################
 resp <- read.csv(file="CPS_.csv", header=TRUE, sep=",",na.strings = "NDA")
+
 dim(resp)
 head(resp)
 #1-5
@@ -448,6 +449,7 @@ resp$College.Enrollment.Rate..[which(is.na(resp$College.Enrollment.Rate..))] = m
 
 resp_ES <- resp[resp[3]=='ES',]
 resp_ES_select <-resp[c(7, 8, 10, 12, 14, 16, 18, 20:26, 53)]
+
 sum(is.na(resp_ES_select))
 library(corrplot)
 M<-cor(resp_ES_select, method="spearman")
@@ -465,5 +467,13 @@ p = prcomp(resp_ES_select, center=T, scale=T)
 plot(p, main="Scree plot")
 abline(1, 0)
 
-fctrs<-fa(resp_ES_select,nfactors = 6, rotate = "varimax", n.obs =400)
+# Determine Number of Factors to Extract
+library(nFactors)
+ev <- eigen(cor(resp_ES_select)) # get eigenvalues
+ap <- parallel(subject=nrow(resp_ES_select),var=ncol(resp_ES_select),
+               rep=100,cent=.05)
+nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+plotnScree(nS)
+
+fctrs<-fa(resp_ES_select,nfactors = 6, rotate = "varimax", n.obs = 566)
 print(fctrs$loadings,cutoff = 0.3)
