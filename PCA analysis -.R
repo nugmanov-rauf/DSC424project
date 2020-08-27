@@ -449,7 +449,6 @@ resp$College.Enrollment.Rate..[which(is.na(resp$College.Enrollment.Rate..))] = m
 resp_ES <- resp[resp[3]=='ES',]
 resp_ES_select <-resp[c(7, 8, 10, 12, 14, 16, 18, 20:26, 53)]
 sum(is.na(resp_ES_select))
-resp_ES_select<- scale(resp_ES_select)
 library(corrplot)
 M<-cor(resp_ES_select, method="spearman")
 dim(resp_ES_select)
@@ -459,17 +458,12 @@ KMO(resp_ES_select)
 library(REdaS)
 bart_spher(resp_ES_select)
 library(psych)
-alpha(resp_ES_select,check.keys=TRUE)
+alpha(scale(resp_ES_select),check.keys=TRUE)
 ##factanal
 p = prcomp(resp_ES_select, center=T, scale=T)
 #Check Scree Plot
 plot(p, main="Scree plot")
 abline(1, 0)
-
-#fit = factanal(resp_ES_select, 4,  rotation="varimax")
-#print(fit$loadings, cutoff=.4, sort=T)
-#loadings
-#summary(fit)
 
 fctrs<-fa(resp_ES_select,nfactors = 6, rotate = "varimax", n.obs =400)
 print(fctrs$loadings,cutoff = 0.3)
